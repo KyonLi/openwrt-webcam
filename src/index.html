@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=contain">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="网络摄像头">
+  <link rel="apple-touch-icon" href="img/touch-icon-iphone.png">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <title>网络摄像头</title>
+  <!-- 引入样式文件 -->
+  <link rel="stylesheet" href="css/vant-2.12.43.min.css" />
+  <!-- 引入 Vue 和 Vant 的 JS 文件 -->
+  <script src="js/vue-2.6.9.min.js"></script>
+  <script src="js/vant-2.12.43.min.js"></script>
+  <script src="js/axios-0.25.0.min.js"></script>
+  <link rel="stylesheet" href="css/index.css" />
+  <script src="js/request.js"></script>
+</head>
+
+<body>
+  <noscript>
+    <strong>抱歉，您的浏览器不支持 JavaScript!</strong>
+  </noscript>
+  <div id="app" v-clock>
+    <div v-show="camOn" class="container" :class="{'fullscreen': fullscreen}" @click="fullscreen = !fullscreen">
+      <img :src="videoUrl" alt="" @error="retry" />
+    </div>
+    <div v-show="!fullscreen" class="menu">
+      <van-cell-group inset title="路由器信息">
+        <van-cell center title="型号" :value="model"></van-cell>
+        <van-cell center title="在线时长" :value="uptimeShow"></van-cell>
+        <van-cell center title="摄像头">
+          <template #right-icon>
+            <van-switch :loading="camStatusLoading" :value="camOn" @input="camOnInput" size="24"></van-switch>
+          </template>
+        </van-cell>
+      </van-cell-group>
+    </div>
+    <van-dialog v-model="showLogin" title="登录" :before-close="login">
+      <p style="text-align: center;">请输入密码</p>
+      <van-field class="input-password" v-model="password" type="password" :border="false"></van-field>
+    </van-dialog>
+  </div>
+  <script src="js/index.js"></script>
+</body>
+
+</html>
